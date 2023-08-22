@@ -27,13 +27,25 @@ class Gameboard {
         coordinates.push([position[0], position[1] + i]);
       }
     }
-    if (coordinates.some((coordinate) => this.fields[coordinate] === undefined)) {
-      console.log('Cant place ship');
-    } else {
+    if (!coordinates.some((coordinate) => this.fields[coordinate] === undefined)) {
       coordinates.forEach((coordinate) => {
         this.fields[coordinate] = ship;
       });
     }
+  }
+
+  recieveAttack(coordinate) {
+    const field = this.fields[[coordinate]];
+    if (field instanceof Ship) {
+      this.fields[[coordinate]].hit();
+      this.fields[[coordinate]] = 'hit';
+    } else if (field === null) {
+      this.fields[[coordinate]] = 'miss';
+    }
+  }
+
+  allShipsSunk() {
+    return !Object.values(this.fields).some((value) => value instanceof Ship);
   }
 }
 
