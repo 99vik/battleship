@@ -1,6 +1,6 @@
 const Player = require('./player');
 
-class playerAI extends Player {
+class PlayerAI extends Player {
   constructor() {
     super();
     this.misses = [];
@@ -11,4 +11,4 @@ class playerAI extends Player {
   }
 }
 
-module.exports = playerAI;
+module.exports = PlayerAI;
