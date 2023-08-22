@@ -19,13 +19,13 @@ test("Doesn't place ship", () => {
     expect(gameboard.fields[[10, 9]]).toBe(null);
 });
 
-test("Ship recieves hit ship", () => {
+test("Ship recieves a hit", () => {
     gameboard.placeShip([2, 2], ship, 'h');
     gameboard.recieveAttack([2, 3]);
     expect(ship.hits).toBe(1);
 });
 
-test("Ship doesn't recieves hit ship", () => {
+test("Ship doesn't recieve a hit", () => {
     gameboard.placeShip([2, 2], ship, 'h');
     gameboard.recieveAttack([3, 2]);
     expect(ship.hits).toBe(0);

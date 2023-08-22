@@ -3,7 +3,8 @@ const Ship = require('./ship');
 class Gameboard {
   constructor() {
     this.fields = this.generateFields();
-    // this.placeShip([10, 9], new Ship(3), 'h');
+    this.placeShip([2, 2], new Ship(3), 'h');
+    this.placeShip([5, 5], new Ship(2), 'v');
   }
 
   generateFields() {
@@ -39,9 +40,12 @@ class Gameboard {
     if (field instanceof Ship) {
       this.fields[[coordinate]].hit();
       this.fields[[coordinate]] = 'hit';
-    } else if (field === null) {
+      return 'hit';
+    } if (field === null) {
       this.fields[[coordinate]] = 'miss';
+      return 'miss';
     }
+    return null;
   }
 
   allShipsSunk() {
