@@ -15,7 +15,7 @@ class Game {
   }
 
   async playerTurn(player) {
-
+    return player;
   }
 
   switchPlayer() {
