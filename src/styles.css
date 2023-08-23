@@ -43,5 +43,20 @@ main > div {
     background-color: blue;
 }
 
+.field.ship.hit {
+    background-color: red;
+}
+
+.field.miss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(213, 213, 213);
+}
+
+.field.miss img {
+    height: 16px;
+}
+
 
 

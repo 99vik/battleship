@@ -1,3 +1,5 @@
+import shotImg from './circle.svg';
+
 const Ship = require('./ship');
 
 export default function generateFields(player, boardDOM) {
@@ -12,6 +14,14 @@ export default function generateFields(player, boardDOM) {
 
     fieldDiv.addEventListener('click', () => {
       player.board.recieveAttack([coordinate]);
+      if (value instanceof Ship) {
+        fieldDiv.classList.add('hit');
+      } else {
+        fieldDiv.classList.add('miss');
+        const img = new Image();
+        img.src = shotImg;
+        fieldDiv.appendChild(img);
+      }
       console.log(player);
     });
     boardDOM.appendChild(fieldDiv);
