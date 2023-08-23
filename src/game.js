@@ -1,3 +1,4 @@
+const { default: markField } = require('./markField');
 const Player = require('./player');
 const PlayerAI = require('./playerAI');
 
@@ -11,13 +12,23 @@ class Game {
     this.botBoard = document.querySelector('#bot');
   }
 
-  playerTurn(player, coordinates) {
-    player.board.recieveAttack([coordinates]);
-    console.log(player);
+  async playerTurn(coordinates) {
+    this.bot.board.recieveAttack([coordinates]);
+    // console.log(this.bot);
     this.dimCurrentPlayerFields();
     setTimeout(() => {
-      console.log(this.bot.takeShot());
-    }, 1000);
+      const botRandomField = this.bot.takeShot().split(',');
+      console.log(botRandomField);
+      // console.log(this.player.board);
+
+      const rowNum = ((Number(botRandomField[0]) - 1) * 10);
+      const columNum = Number(botRandomField[1]);
+      const fieldNum = rowNum + columNum;
+      const selectedField = this.playerBoard.children.item(fieldNum - 1);
+      markField(selectedField, this.player.board.fields[botRandomField]);
+      this.player.board.recieveAttack(botRandomField);
+      this.dimCurrentPlayerFields();
+    }, 500);
   }
 
   dimCurrentPlayerFields() {

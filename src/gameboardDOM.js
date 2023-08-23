@@ -1,4 +1,4 @@
-import shotImg from './circle.svg';
+import markField from './markField';
 import PlayerAI from './playerAI';
 
 const Ship = require('./ship');
@@ -15,14 +15,10 @@ export default function generateFields(player, boardDOM, game) {
 
     if (player instanceof PlayerAI) {
       fieldDiv.addEventListener('click', () => {
-        game.playerTurn(player, coordinate);
-        if (value instanceof Ship) {
-          fieldDiv.classList.add('hit');
-        } else {
-          fieldDiv.classList.add('miss');
-          const img = new Image();
-          img.src = shotImg;
-          fieldDiv.appendChild(img);
+        if (game.bot.board.fields[coordinate] === null
+          || game.bot.board.fields[coordinate] instanceof Ship) {
+          game.playerTurn(coordinate);
+          markField(fieldDiv, value);
         }
       });
     }
