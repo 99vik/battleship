@@ -18,6 +18,7 @@ main {
 
 main > div {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -36,6 +37,10 @@ main > div {
     border-bottom: 1px solid rgb(0, 0, 255);
     background-color: whitesmoke;
     height: 40px;
+}
+
+.field.ship {
+    background-color: blue;
 }
 
 

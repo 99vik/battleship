@@ -36,6 +36,7 @@ class Gameboard {
   }
 
   recieveAttack(coordinate) {
+    console.log(coordinate);
     const field = this.fields[[coordinate]];
     if (field instanceof Ship) {
       this.fields[[coordinate]].hit();

@@ -14,8 +14,8 @@ class Game {
     }
   }
 
-  async playerTurn(player) {
-    return player;
+  playerTurn(player) {
+    console.log(player);
   }
 
   switchPlayer() {
