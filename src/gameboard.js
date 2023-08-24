@@ -1,4 +1,5 @@
 const { default: findAdjecentFields } = require('./findAdjecentFields');
+const { default: markField } = require('./markField');
 const Ship = require('./ship');
 
 class Gameboard {
@@ -38,12 +39,16 @@ class Gameboard {
     }
   }
 
-  recieveAttack(coordinate) {
+  recieveAttack(coordinate, board) {
     const field = this.fields[[coordinate]];
     if (field instanceof Ship) {
       this.fields[[coordinate]].hit();
       if (this.fields[[coordinate]].isSunk()) {
         const adjecentFields = findAdjecentFields(coordinate, this.fields);
+        adjecentFields.forEach((field) => {
+          const fieldNum = (field[0] - 1) * 10 + field[1];
+          markField(board.children.item(fieldNum - 1), field);
+        });
         console.log(adjecentFields);
       }
       this.fields[[coordinate]] = 'hit';

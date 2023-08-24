@@ -22,7 +22,7 @@ class Game {
   }
 
   playerTurn(coordinates) {
-    this.bot.board.recieveAttack([coordinates]);
+    this.bot.board.recieveAttack([coordinates], this.botBoard);
     if (this.bot.board.allShipsSunk()) {
       this.winSequence('You');
       this.playerBoard.classList.remove('dimmed');
@@ -36,7 +36,7 @@ class Game {
       const fieldNum = rowNum + columNum;
       const selectedField = this.playerBoard.children.item(fieldNum - 1);
       markField(selectedField, this.player.board.fields[botRandomField]);
-      this.player.board.recieveAttack(botRandomField);
+      this.player.board.recieveAttack(botRandomField, this.playerBoard);
       if (this.player.board.fields[botRandomField] === 'miss') {
         this.bot.misses.push(botRandomField);
       } else {
