@@ -4,6 +4,7 @@ import PlayerAI from './playerAI';
 const Ship = require('./ship');
 
 export default function generateFields(player, boardDOM, game) {
+  boardDOM.innerHTML = '';
   Object.keys(player.board.fields).forEach((coordinate) => {
     const value = player.board.fields[coordinate];
     const fieldDiv = document.createElement('div');
