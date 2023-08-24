@@ -7,11 +7,12 @@ class Game {
   constructor() {
     this.player = new Player();
     this.bot = new PlayerAI();
-    this.currentPlayer = this.player;
-    this.opponent = this.bot;
     this.playerBoard = document.querySelector('#player');
     this.playerBoard.classList.toggle('dimmed');
     this.botBoard = document.querySelector('#bot');
+  }
+
+  startGame() {
     this.generateBoards();
   }
 
@@ -36,6 +37,12 @@ class Game {
       const selectedField = this.playerBoard.children.item(fieldNum - 1);
       markField(selectedField, this.player.board.fields[botRandomField]);
       this.player.board.recieveAttack(botRandomField);
+      if (this.player.board.fields[botRandomField] === 'miss') {
+        this.bot.misses.push(botRandomField);
+      } else {
+        this.bot.hits.push(botRandomField);
+      }
+      console.log(this.bot);
       if (this.player.board.allShipsSunk()) {
         this.winSequence('Computer');
         this.botBoard.classList.remove('dimmed');
@@ -78,9 +85,9 @@ class Game {
     modal.children[0].textContent = `${winner} won.`;
 
     modal.children[1].addEventListener('click', () => {
-      main.classList.toggle('noclick');
-      modal.classList.toggle('show');
-      this.playerBoard.classList.toggle('dimmed');
+      main.classList.remove('noclick');
+      modal.classList.remove('show');
+      this.playerBoard.classList.add('dimmed');
       this.restartPlayers();
       this.generateBoards();
     });
