@@ -3,6 +3,9 @@ import shotImg from './circle.svg';
 const Ship = require('./ship');
 
 export default function markField(fieldDiv, value) {
+  if (fieldDiv.children.length !== 0) {
+    return;
+  }
   if (value instanceof Ship) {
     fieldDiv.classList.add('hit');
   } else {

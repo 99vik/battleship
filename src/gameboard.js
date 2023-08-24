@@ -50,7 +50,6 @@ class Gameboard {
           markField(board.children.item(fieldNum - 1), _field);
           this.fields[[`${_field[0]},${_field[1]}`]] = 'miss';
         });
-        console.log(adjecentFields);
       }
       this.fields[[coordinate]] = 'hit';
       return 'hit';

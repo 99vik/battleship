@@ -28,9 +28,13 @@ class Game {
       this.playerBoard.classList.remove('dimmed');
       return;
     }
+    this.botMove();
     this.dimCurrentPlayerFields();
+  }
+
+  botMove() {
     setTimeout(() => {
-      const botRandomField = this.bot.takeShot().split(',');
+      const botRandomField = this.bot.takeShot(this.player.board.fields).split(',');
       const rowNum = ((Number(botRandomField[0]) - 1) * 10);
       const columNum = Number(botRandomField[1]);
       const fieldNum = rowNum + columNum;

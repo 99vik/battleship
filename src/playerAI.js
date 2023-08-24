@@ -7,11 +7,11 @@ class PlayerAI extends Player {
     this.hits = [];
   }
 
-  takeShot() {
+  takeShot(playerFields) {
     const values = Object.keys(this.board.fields);
     const randomField = values[Math.floor(Math.random() * values.length)];
-    if (this.misses.includes(randomField) || this.hits.includes(randomField)) {
-      this.takeShot();
+    if (playerFields[randomField] === 'miss' || playerFields[randomField] === 'hit') {
+      return this.takeShot(playerFields);
     }
     return randomField;
   }
