@@ -42,7 +42,6 @@ class Game {
       } else {
         this.bot.hits.push(botRandomField);
       }
-      console.log(this.bot);
       if (this.player.board.allShipsSunk()) {
         this.winSequence('Computer');
         this.botBoard.classList.remove('dimmed');

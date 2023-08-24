@@ -1,3 +1,4 @@
+const { default: findAdjecentFields } = require('./findAdjecentFields');
 const Ship = require('./ship');
 
 class Gameboard {
@@ -39,6 +40,9 @@ class Gameboard {
     const field = this.fields[[coordinate]];
     if (field instanceof Ship) {
       this.fields[[coordinate]].hit();
+      if (this.fields[[coordinate]].isSunk()) {
+        const adjecentFields = findAdjecentFields(coordinate, this.fields);
+      }
       this.fields[[coordinate]] = 'hit';
       return 'hit';
     } if (field === null) {
