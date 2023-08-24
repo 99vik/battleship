@@ -45,9 +45,10 @@ class Gameboard {
       this.fields[[coordinate]].hit();
       if (this.fields[[coordinate]].isSunk()) {
         const adjecentFields = findAdjecentFields(coordinate, this.fields);
-        adjecentFields.forEach((field) => {
-          const fieldNum = (field[0] - 1) * 10 + field[1];
-          markField(board.children.item(fieldNum - 1), field);
+        adjecentFields.forEach((_field) => {
+          const fieldNum = (_field[0] - 1) * 10 + _field[1];
+          markField(board.children.item(fieldNum - 1), _field);
+          this.fields[[`${_field[0]},${_field[1]}`]] = 'miss';
         });
         console.log(adjecentFields);
       }
