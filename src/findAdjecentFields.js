@@ -36,10 +36,14 @@ function removeShipFields(_shipFields, fields) {
     const col = Number(field[0].split(',')[1]);
     return [row, col];
   });
-  console.log('______________');
-  console.log(shipFields);
-  console.log(fields);
-  console.log(fields.some((x) => x[0] === shipFields[1][0] && x[1] === shipFields[1][1]));
+
+  return fields.filter((field) => {
+    if (!shipFields.some((shipField) => shipField[0] === field[0]
+     && shipField[1] === field[1])) {
+      return true;
+    }
+    return false;
+  });
 }
 
 export default function findAdjecentFields(coordinate, fields) {
@@ -52,7 +56,6 @@ export default function findAdjecentFields(coordinate, fields) {
   adjecentFields = removeOuterFields(adjecentFields.flat());
   adjecentFields = removeReduntantFields(adjecentFields);
   adjecentFields = removeShipFields(shipFields, adjecentFields);
-  console.log(adjecentFields);
 
-  return shipFields;
+  return adjecentFields;
 }

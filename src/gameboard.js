@@ -44,6 +44,7 @@ class Gameboard {
       this.fields[[coordinate]].hit();
       if (this.fields[[coordinate]].isSunk()) {
         const adjecentFields = findAdjecentFields(coordinate, this.fields);
+        console.log(adjecentFields);
       }
       this.fields[[coordinate]] = 'hit';
       return 'hit';
