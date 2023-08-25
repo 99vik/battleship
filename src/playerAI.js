@@ -20,19 +20,18 @@ class PlayerAI extends Player {
   }
 
   shootAdjecent(playerFields) {
-    console.log('shooting adjecent');
     let selectedShot;
     if (this.hits.length === 1) {
       const field = this.hits[0];
       const rowNum = Number(field[0]);
       const colNum = Number(field[1]);
-      if (playerFields[`${rowNum + 1},${colNum}`] !== 'miss' && playerFields[`${rowNum + 1},${colNum}`] !== 'hit') {
+      if (playerFields[`${rowNum + 1},${colNum}`] !== 'miss' && playerFields[`${rowNum + 1},${colNum}`] !== 'hit' && rowNum + 1 <= 10) {
         selectedShot = `${rowNum + 1},${colNum}`;
-      } if (playerFields[`${rowNum - 1},${colNum}`] !== 'miss' && playerFields[`${rowNum - 1},${colNum}`] !== 'hit') {
+      } if (playerFields[`${rowNum - 1},${colNum}`] !== 'miss' && playerFields[`${rowNum - 1},${colNum}`] !== 'hit' && rowNum - 1 >= 1) {
         selectedShot = `${rowNum - 1},${colNum}`;
-      } if (playerFields[`${rowNum},${colNum + 1}`] !== 'miss' && playerFields[`${rowNum},${colNum + 1}`] !== 'hit') {
+      } if (playerFields[`${rowNum},${colNum + 1}`] !== 'miss' && playerFields[`${rowNum},${colNum + 1}`] !== 'hit' && colNum + 1 <= 10) {
         selectedShot = `${rowNum},${colNum + 1}`;
-      } if (playerFields[`${rowNum},${colNum - 1}`] !== 'miss' && playerFields[`${rowNum},${colNum - 1}`] !== 'hit') {
+      } if (playerFields[`${rowNum},${colNum - 1}`] !== 'miss' && playerFields[`${rowNum},${colNum - 1}`] !== 'hit' && colNum + 1 >= 1) {
         selectedShot = `${rowNum},${colNum - 1}`;
       }
     } else {

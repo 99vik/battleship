@@ -57,6 +57,5 @@ export default function findAdjecentFields(coordinate, fields) {
   adjecentFields = removeReduntantFields(adjecentFields);
   adjecentFields = removeShipFields(shipFields, adjecentFields);
 
-  console.log(adjecentFields);
   return adjecentFields;
 }

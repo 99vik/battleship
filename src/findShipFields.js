@@ -6,12 +6,10 @@ function checkDirection(fields, rowNum, colNum) {
   if (fieldValue === 'miss' || fieldValue === null || fieldValue === undefined) {
     return false;
   }
-  console.log(fieldValue);
   return true;
 }
 
 function checkLeft(shipFields, fields, rowNum, colNum) {
-  console.log('left');
   if (checkDirection(fields, rowNum, colNum)) {
     shipFields.push([`${rowNum},${colNum}`]);
     return checkLeft(shipFields, fields, rowNum, colNum - 1);
@@ -21,8 +19,6 @@ function checkLeft(shipFields, fields, rowNum, colNum) {
 }
 
 function checkRight(shipFields, fields, rowNum, colNum) {
-  console.log('right');
-
   if (checkDirection(fields, rowNum, colNum)) {
     shipFields.push([`${rowNum},${colNum}`]);
     return checkRight(shipFields, fields, rowNum, colNum + 1);
@@ -31,8 +27,6 @@ function checkRight(shipFields, fields, rowNum, colNum) {
 }
 
 function checkUp(shipFields, fields, rowNum, colNum) {
-  console.log('up');
-
   if (checkDirection(fields, rowNum, colNum)) {
     shipFields.push([`${rowNum},${colNum}`]);
     return checkUp(shipFields, fields, rowNum - 1, colNum);
@@ -41,8 +35,6 @@ function checkUp(shipFields, fields, rowNum, colNum) {
 }
 
 function checkDown(shipFields, fields, rowNum, colNum) {
-  console.log('down');
-
   if (checkDirection(fields, rowNum, colNum)) {
     shipFields.push([`${rowNum},${colNum}`]);
     return checkUp(shipFields, fields, rowNum + 1, colNum);

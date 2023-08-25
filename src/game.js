@@ -51,7 +51,6 @@ class Game {
       } else {
         this.bot.hits.push(botRandomField);
         if (ship.isSunk()) {
-          console.log('resetting hits');
           this.bot.hits = [];
         }
       }
