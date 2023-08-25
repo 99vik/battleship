@@ -1,4 +1,2 @@
-Add logic to bot
 Ship placement / bot random placement
-Fix call stack size error
 Hide bot field

@@ -37,7 +37,7 @@ function checkUp(shipFields, fields, rowNum, colNum) {
 function checkDown(shipFields, fields, rowNum, colNum) {
   if (checkDirection(fields, rowNum, colNum)) {
     shipFields.push([`${rowNum},${colNum}`]);
-    return checkUp(shipFields, fields, rowNum + 1, colNum);
+    return checkDown(shipFields, fields, rowNum + 1, colNum);
   }
   return shipFields;
 }
