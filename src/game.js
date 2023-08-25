@@ -2,6 +2,7 @@ const { default: generateFields } = require('./gameboardDOM');
 const { default: markField } = require('./markField');
 const Player = require('./player');
 const PlayerAI = require('./playerAI');
+const Ship = require('./ship');
 
 class Game {
   constructor() {
@@ -38,13 +39,21 @@ class Game {
       const rowNum = ((Number(botRandomField[0]) - 1) * 10);
       const columNum = Number(botRandomField[1]);
       const fieldNum = rowNum + columNum;
+      let ship;
       const selectedField = this.playerBoard.children.item(fieldNum - 1);
+      if (this.player.board.fields[botRandomField] instanceof Ship) {
+        ship = this.player.board.fields[botRandomField];
+      }
       markField(selectedField, this.player.board.fields[botRandomField]);
-      this.player.board.recieveAttack(botRandomField, this.playerBoard);
+      this.player.board.recieveAttack([`${botRandomField[0]},${botRandomField[1]}`], this.playerBoard);
       if (this.player.board.fields[botRandomField] === 'miss') {
         this.bot.misses.push(botRandomField);
       } else {
         this.bot.hits.push(botRandomField);
+        if (ship.isSunk()) {
+          console.log('resetting hits');
+          this.bot.hits = [];
+        }
       }
       if (this.player.board.allShipsSunk()) {
         this.winSequence('Computer');
