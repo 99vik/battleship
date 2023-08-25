@@ -5,11 +5,11 @@ const Ship = require('./ship');
 class Gameboard {
   constructor() {
     this.fields = this.generateFields();
-    this.placeShip([2, 2], new Ship(3), 'h');
+    this.placeShip([1, 1], new Ship(3), 'h');
     this.placeShip([5, 5], new Ship(2), 'v');
     this.placeShip([10, 8], new Ship(3), 'h');
     this.placeShip([1, 10], new Ship(4), 'v');
-    this.placeShip([4, 3], new Ship(5), 'v');
+    this.placeShip([6, 1], new Ship(5), 'v');
   }
 
   generateFields() {
