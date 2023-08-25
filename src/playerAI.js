@@ -55,14 +55,8 @@ class PlayerAI extends Player {
       const secondField = this.hits[this.hits.length - 1];
       const rowNumFirst = Number(firstField[0]);
       const colNumFirst = Number(firstField[1]);
-      const rowNumSecond = Number(secondField[0]);
       const colNumSecond = Number(secondField[1]);
       let possibleShots;
-      // if (colNumFirst === colNumSecond) {
-      //   possibleShots = [[`${Math.max(rowNumFirst, rowNumSecond) + 1},${colNumFirst}`], [`${Math.min(rowNumFirst, rowNumSecond) - 1},${colNumFirst}`]];
-      // } else {
-      //   possibleShots = [[`${rowNumFirst},${Math.max(colNumFirst, colNumSecond) + 1}`], [`${rowNumFirst},${Math.min(colNumFirst, colNumSecond) - 1}`]];
-      // }
       if (colNumFirst === colNumSecond) {
         possibleShots = [[`${Math.max(rowSorted[0][0], rowSorted[rowSorted.length - 1][0]) + 1},${colNumFirst}`], [`${Math.min(rowSorted[0][0], rowSorted[rowSorted.length - 1][0]) - 1},${colNumFirst}`]];
       } else {

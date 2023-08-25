@@ -1,4 +1,5 @@
 const { default: generateFields } = require('./gameboardDOM');
+const { default: generateShipPlacementDOM } = require('./generateShipPlacementDOM');
 const { default: markField } = require('./markField');
 const Player = require('./player');
 const PlayerAI = require('./playerAI');
@@ -14,7 +15,12 @@ class Game {
   }
 
   startGame() {
-    this.generateBoards();
+    this.playerPlaceShips();
+    // this.generateBoards();
+  }
+
+  playerPlaceShips() {
+    generateShipPlacementDOM(this.player, this.playerBoard, this.botBoard);
   }
 
   generateBoards() {
@@ -83,12 +89,7 @@ class Game {
     }
   }
 
-  announceWinner(winner) {
-    console.log(`${winner} won!`);
-  }
-
   winSequence(winner) {
-    this.announceWinner(winner);
     const main = document.querySelector('main');
     main.classList.toggle('noclick');
     const modal = document.querySelector('.popup-modal');
