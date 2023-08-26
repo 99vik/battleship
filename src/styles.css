@@ -46,6 +46,14 @@ main > div {
     background-color: white;
 }
 
+.field.ship-drag-valid {
+    background-color: rgb(143, 143, 255);
+}
+
+.field.ship-drag-invalid {
+    background-color: rgb(255, 151, 151);
+}
+
 .ship-placement.horizontal {
     transform: rotate(-90deg);
 }

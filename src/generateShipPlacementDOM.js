@@ -98,7 +98,7 @@ function getAdjecentFields(shipFields) {
   return adjecentFields;
 }
 
-function placementValid(coordinate, shipRotation, length, board) {
+function placementValid(coordinate, shipRotation, length) {
   const shipFields = [];
   const rowNum = Number(coordinate.split(',')[0]);
   const colNum = Number(coordinate.split(',')[1]);
@@ -114,6 +114,12 @@ function placementValid(coordinate, shipRotation, length, board) {
   if (shipFields.some((field) => field[0] < 1 || field[0] > 10 || field[1] < 1 || field[1] > 10)) {
     return false;
   }
+
+  if (shipFields.some((shipField) => takenFields
+    .some((takenField) => shipField[0] === takenField[0]
+    && shipField[1] === takenField[1]))) {
+    return false;
+  }
   shipFields.forEach((field) => {
     takenFields.push(field);
     const fieldNum = (field[0] - 1) * 10 + field[1];
@@ -124,7 +130,31 @@ function placementValid(coordinate, shipRotation, length, board) {
   adjecentFields.forEach((field) => {
     takenFields.push(field);
   });
-  console.log(takenFields);
+  return true;
+}
+
+function placementValidDrag(coordinate, shipRotation, length) {
+  const shipFields = [];
+  const rowNum = Number(coordinate.split(',')[0]);
+  const colNum = Number(coordinate.split(',')[1]);
+  if (shipRotation === 'h') {
+    for (let i = colNum; i < (colNum + length); i += 1) {
+      shipFields.push([rowNum, i]);
+    }
+  } else {
+    for (let i = rowNum; i < (rowNum + length); i += 1) {
+      shipFields.push([i, colNum]);
+    }
+  }
+  if (shipFields.some((field) => field[0] < 1 || field[0] > 10 || field[1] < 1 || field[1] > 10)) {
+    return false;
+  }
+
+  if (shipFields.some((shipField) => takenFields
+    .some((takenField) => shipField[0] === takenField[0]
+    && shipField[1] === takenField[1]))) {
+    return false;
+  }
   return true;
 }
 
@@ -132,6 +162,22 @@ function placeShip(coordinate, board, length, shipRotation) {
   const rowNum = Number(coordinate.split(',')[0]);
   const colNum = Number(coordinate.split(',')[1]);
   board.placeShip([rowNum, colNum], new Ship(length), shipRotation);
+}
+
+function getShipFields(coordinate, shipRotation, length) {
+  const shipFields = [];
+  const rowNum = Number(coordinate.split(',')[0]);
+  const colNum = Number(coordinate.split(',')[1]);
+  if (shipRotation === 'h') {
+    for (let i = colNum; i < (colNum + length); i += 1) {
+      shipFields.push([rowNum, i]);
+    }
+  } else {
+    for (let i = rowNum; i < (rowNum + length); i += 1) {
+      shipFields.push([i, colNum]);
+    }
+  }
+  return shipFields;
 }
 
 export default function generateShipPlacementDOM(player, playerBoardDOM, botBoardDOM) {
@@ -147,6 +193,37 @@ export default function generateShipPlacementDOM(player, playerBoardDOM, botBoar
 
     fieldDiv.addEventListener('dragover', (event) => {
       event.preventDefault();
+      const length = dragged[0];
+      const shipRotation = dragged[1];
+      let shipFields = getShipFields(coordinate, shipRotation, length);
+
+      if (placementValidDrag(coordinate, shipRotation, length)) {
+        shipFields.forEach((field) => {
+          const fieldNum = (field[0] - 1) * 10 + field[1];
+          const selectedField = document.querySelector('#player').children.item(fieldNum - 1);
+          selectedField.classList.add('ship-drag-valid');
+        });
+      } else {
+        shipFields = removeOuterFields(shipFields);
+        shipFields.forEach((field) => {
+          const fieldNum = (field[0] - 1) * 10 + field[1];
+          const selectedField = document.querySelector('#player').children.item(fieldNum - 1);
+          selectedField.classList.add('ship-drag-invalid');
+        });
+      }
+    });
+    fieldDiv.addEventListener('dragleave', (event) => {
+      event.preventDefault();
+      const length = dragged[0];
+      const shipRotation = dragged[1];
+      let shipFields = getShipFields(coordinate, shipRotation, length);
+      shipFields = removeOuterFields(shipFields);
+      shipFields.forEach((field) => {
+        const fieldNum = (field[0] - 1) * 10 + field[1];
+        const selectedField = document.querySelector('#player').children.item(fieldNum - 1);
+        selectedField.classList.remove('ship-drag-invalid');
+        selectedField.classList.remove('ship-drag-valid');
+      });
     });
     fieldDiv.addEventListener('drop', (event) => {
       event.preventDefault();
@@ -156,7 +233,6 @@ export default function generateShipPlacementDOM(player, playerBoardDOM, botBoar
       if (placementValid(coordinate, shipRotation, length, board)) {
         shipDiv.remove();
         placeShip(coordinate, board, length, shipRotation);
-        console.log(board);
       }
     });
 
