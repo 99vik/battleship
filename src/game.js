@@ -67,7 +67,7 @@ class Game {
         return;
       }
       this.dimCurrentPlayerFields();
-    }, 1);
+    }, 1500);
   }
 
   restartPlayers() {
