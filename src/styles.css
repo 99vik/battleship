@@ -44,6 +44,13 @@ main > div {
     height: 400px;
     border: none;
     background-color: white;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .field.ship-drag-valid {
@@ -165,4 +172,11 @@ button.rotate-btn:hover {
     background-color: rgb(74, 135, 173);
 }
 
-
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
