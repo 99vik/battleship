@@ -24,6 +24,7 @@ class Game {
 
   generateBoards() {
     this.playerBoard.classList.add('dimmed');
+    this.bot.placeShips();
     generateFields(this.player, this.playerBoard, this);
     generateFields(this.bot, this.botBoard, this);
   }

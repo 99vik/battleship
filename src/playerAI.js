@@ -6,9 +6,112 @@ class PlayerAI extends Player {
     super();
     this.misses = [];
     this.hits = [];
-    this.board.placeShip([6, 1], new Ship(5), 'v');
-    this.board.placeShip([10, 8], new Ship(3), 'h');
-    this.board.placeShip([1, 10], new Ship(4), 'v');
+  }
+
+  removeShipFields(shipFields, fields) {
+    return fields.filter((field) => {
+      if (!shipFields.some((shipField) => shipField[0] === field[0]
+         && shipField[1] === field[1])) {
+        return true;
+      }
+      return false;
+    });
+  }
+
+  removeReduntantFields(fields) {
+    const cleanedFields = [];
+    fields.forEach((field) => {
+      if (!cleanedFields.some((cleanedField) => cleanedField[0] === field[0]
+         && cleanedField[1] === field[1])) {
+        cleanedFields.push(field);
+      }
+    });
+    return cleanedFields;
+  }
+
+  addAdjecentFields(field) {
+    const row = field[0];
+    const col = field[1];
+    return [[row + 1, col], [row, col + 1],
+      [row + 1, col + 1], [row - 1, col],
+      [row, col - 1], [row - 1, col - 1],
+      [row - 1, col + 1], [row + 1, col - 1]];
+  }
+
+  removeOuterFields(fields) {
+    const cleanedFields = fields.filter((field) => {
+      if (field[0] >= 1 && field[0] <= 10 && field[1] >= 1 && field[1] <= 10) {
+        return true;
+      }
+      return false;
+    });
+    return cleanedFields;
+  }
+
+  getAdjecentFields(shipFields) {
+    let adjecentFields = [];
+
+    shipFields.forEach((field) => {
+      adjecentFields.push(this.addAdjecentFields(field));
+    });
+    adjecentFields = this.removeOuterFields(adjecentFields.flat());
+    adjecentFields = this.removeReduntantFields(adjecentFields);
+    adjecentFields = this.removeShipFields(shipFields, adjecentFields);
+
+    return adjecentFields;
+  }
+
+  shipPlacementValid(coordinate, shipRotation, length) {
+    const shipFields = [];
+    const rowNum = Number(coordinate[0]);
+    const colNum = Number(coordinate[1]);
+    if (shipRotation === 'h') {
+      for (let i = colNum; i < (colNum + length); i += 1) {
+        shipFields.push([rowNum, i]);
+      }
+    } else {
+      for (let i = rowNum; i < (rowNum + length); i += 1) {
+        shipFields.push([i, colNum]);
+      }
+    }
+    if (shipFields.some((field) => field[0] < 1
+    || field[0] > 10 || field[1] < 1 || field[1] > 10)) {
+      return false;
+    }
+
+    if (shipFields.some((shipField) => this.takenFields
+      .some((takenField) => shipField[0] === takenField[0]
+      && shipField[1] === takenField[1]))) {
+      return false;
+    }
+    shipFields.forEach((field) => {
+      this.takenFields.push(field);
+    });
+    const adjecentFields = this.getAdjecentFields(shipFields);
+    adjecentFields.forEach((field) => {
+      this.takenFields.push(field);
+    });
+    return true;
+  }
+
+  generateRandomShipPlacement(length) {
+    const randRow = Math.floor(Math.random() * 10) + 1;
+    const randCol = Math.floor(Math.random() * 10) + 1;
+    const coordinate = [randRow, randCol];
+    const rotations = ['v', 'h'];
+    const shipRotation = rotations[Math.floor(Math.random() * rotations.length)];
+    if (this.shipPlacementValid(coordinate, shipRotation, length)) {
+      return this.board.placeShip(coordinate, new Ship(length), shipRotation);
+    }
+    return this.generateRandomShipPlacement(length);
+  }
+
+  placeShips() {
+    this.takenFields = [];
+    const ships = [5, 4, 3, 3, 2];
+    ships.forEach((length) => {
+      this.generateRandomShipPlacement(length);
+    });
   }
 
   takeShot(playerFields) {
