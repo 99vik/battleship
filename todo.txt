@@ -1,2 +1,0 @@
-Ship placement / bot random placement
-Hide bot field

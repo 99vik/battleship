@@ -11,8 +11,10 @@ export default function generateFields(player, boardDOM, game) {
     const fieldDiv = document.createElement('div');
     fieldDiv.classList.add('field');
 
-    if (value instanceof Ship) {
-      fieldDiv.classList.add('ship');
+    if (!(player instanceof PlayerAI)) {
+      if (value instanceof Ship) {
+        fieldDiv.classList.add('ship');
+      }
     }
 
     if (player instanceof PlayerAI) {

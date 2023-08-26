@@ -10,6 +10,7 @@ export default function markField(fieldDiv, value) {
     return;
   }
   if (value instanceof Ship) {
+    fieldDiv.classList.add('ship');
     fieldDiv.classList.add('hit');
   } else {
     fieldDiv.classList.add('miss');

@@ -193,8 +193,6 @@ function placementFinished(botBoardDOM, player, game) {
 }
 
 export default function generateShipPlacementDOM(player, playerBoardDOM, botBoardDOM, game) {
-  console.log(game.player);
-  console.log(game.bot);
   takenFields = [];
   createRotateButton(botBoardDOM);
   const botBoard = botBoardDOM;
