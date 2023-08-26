@@ -182,11 +182,13 @@ function getShipFields(coordinate, shipRotation, length) {
 
 function placementFinished(botBoardDOM, player, game) {
   if (botBoardDOM.children.length === 0) {
+    document.querySelectorAll('.rotate-btn').forEach((element) => {
+      element.remove();
+    });
     const botBoard = botBoardDOM;
     botBoard.parentNode.children[0].textContent = 'Computer';
     botBoard.classList.remove('ship-placement');
     game.generateBoards();
-    document.querySelector('.rotate-btn').remove();
   }
 }
 
