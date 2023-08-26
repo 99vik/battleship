@@ -16,6 +16,8 @@ main {
     grid-template-columns: 1fr 1fr;
 }
 
+
+
 main > div {
     position: relative;
     display: flex;
@@ -179,4 +181,46 @@ button.rotate-btn:hover {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+@media (max-width: 900px) {
+  main {
+    margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 500px) {
+    h1 {
+    text-align: center;
+    margin-top: 0.2rem;   
+    }
+
+    .field {
+        height: 35px;
+    }
+
+    .board {
+        grid-template-columns: repeat(10, 35px);
+    }
+
+    .ship-placement {
+        margin: 0.6rem;
+        grid-template-columns: repeat(5, 35px);
+        column-gap: 1rem;
+        height: 300px;
+        border: none;
+        background-color: white;
+
+    }
+
+    /* .unselectable {
+    -webkit-touch-callout: initial;
+    -webkit-user-select: auto;
+    -khtml-user-select: auto;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: all;
+} */
 }

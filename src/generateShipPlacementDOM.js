@@ -259,7 +259,6 @@ export default function generateShipPlacementDOM(player, playerBoardDOM, botBoar
         placementFinished(botBoardDOM, player, game);
       }
     });
-
     playerBoard.appendChild(fieldDiv);
   });
   botBoard.parentNode.children[0].textContent = 'Place you ships';
