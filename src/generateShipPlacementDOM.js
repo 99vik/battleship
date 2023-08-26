@@ -2,7 +2,7 @@ import Ship from './ship';
 
 let dragged = null;
 let rotation = 'v';
-const takenFields = [];
+let takenFields = [];
 
 function createShip(length) {
   const shipDiv = document.createElement('div');
@@ -180,9 +180,23 @@ function getShipFields(coordinate, shipRotation, length) {
   return shipFields;
 }
 
-export default function generateShipPlacementDOM(player, playerBoardDOM, botBoardDOM) {
+function placementFinished(botBoardDOM, player, game) {
+  if (botBoardDOM.children.length === 0) {
+    document.querySelector('.rotate-btn').remove();
+    const botBoard = botBoardDOM;
+    botBoard.parentNode.children[0].textContent = 'Computer';
+    botBoard.classList.remove('ship-placement');
+    game.generateBoards();
+  }
+}
+
+export default function generateShipPlacementDOM(player, playerBoardDOM, botBoardDOM, game) {
+  console.log(game.player);
+  console.log(game.bot);
+  takenFields = [];
   createRotateButton(botBoardDOM);
   const botBoard = botBoardDOM;
+  botBoard.innerHTML = '';
   const playerBoard = playerBoardDOM;
   const board = player.board;
   playerBoard.innerHTML = '';
@@ -230,9 +244,19 @@ export default function generateShipPlacementDOM(player, playerBoardDOM, botBoar
       const shipRotation = dragged[1];
       const length = dragged[0];
       const shipDiv = dragged[2];
+      let shipFields = getShipFields(coordinate, shipRotation, length);
+      shipFields = removeOuterFields(shipFields);
+      shipFields.forEach((field) => {
+        const fieldNum = (field[0] - 1) * 10 + field[1];
+        const selectedField = document.querySelector('#player').children.item(fieldNum - 1);
+        selectedField.classList.remove('ship-drag-invalid');
+        selectedField.classList.remove('ship-drag-valid');
+      });
+
       if (placementValid(coordinate, shipRotation, length, board)) {
         shipDiv.remove();
         placeShip(coordinate, board, length, shipRotation);
+        placementFinished(botBoardDOM, player, game);
       }
     });
 

@@ -1,10 +1,14 @@
 const Player = require('./player');
+const Ship = require('./ship');
 
 class PlayerAI extends Player {
   constructor() {
     super();
     this.misses = [];
     this.hits = [];
+    this.board.placeShip([6, 1], new Ship(5), 'v');
+    this.board.placeShip([10, 8], new Ship(3), 'h');
+    this.board.placeShip([1, 10], new Ship(4), 'v');
   }
 
   takeShot(playerFields) {

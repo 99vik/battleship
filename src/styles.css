@@ -93,6 +93,7 @@ main > div {
 }
 
 .popup-modal {
+    z-index: 3;
     height: 30%;
     width: 30%;
     display: flex;

@@ -16,14 +16,14 @@ class Game {
 
   startGame() {
     this.playerPlaceShips();
-    // this.generateBoards();
   }
 
   playerPlaceShips() {
-    generateShipPlacementDOM(this.player, this.playerBoard, this.botBoard);
+    generateShipPlacementDOM(this.player, this.playerBoard, this.botBoard, this);
   }
 
   generateBoards() {
+    this.playerBoard.classList.add('dimmed');
     generateFields(this.player, this.playerBoard, this);
     generateFields(this.bot, this.botBoard, this);
   }
@@ -101,7 +101,7 @@ class Game {
       modal.classList.remove('show');
       this.playerBoard.classList.add('dimmed');
       this.restartPlayers();
-      this.generateBoards();
+      this.startGame();
     });
   }
 }
